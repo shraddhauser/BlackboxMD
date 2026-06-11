@@ -55,6 +55,4 @@ curl -X POST http://localhost:8000/analyze \
 
 Contributions welcome for clinical NLP, FHIR integration, XAI, and frontend work. Open an issue first.
 
-## License
 
-MIT License
