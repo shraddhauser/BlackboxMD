@@ -28,7 +28,7 @@ It **raises a quiet flag** — and shows exactly why.
 When a doctor's diagnosis statistically conflicts with the patient's symptom pattern, lab trends, and 10 million similar historical cases, BLACKBOX MD surfaces a ranked list of alternative diagnoses with a plain-language explanation of every data point that triggered the flag.
 
 ```
-    Flag raised for Patient #4821
+     Flag raised for Patient #4821
     Primary diagnosis:  Tension Headache
     Flagged because:    3 data points conflict with this diagnosis
 
@@ -90,7 +90,7 @@ The doctor sees the reasoning. The doctor decides. BLACKBOX MD just makes sure n
 
 ---
 
-##  Core Technical Components
+## Core Technical Components
 
 ### 1. Diagnosis Classifier
 - Model: **XGBoost** ensemble + symptom NLP pipeline (BioBERT fine-tuned on clinical notes)
@@ -118,7 +118,7 @@ The doctor sees the reasoning. The doctor decides. BLACKBOX MD just makes sure n
 
 ---
 
-## Target Impact
+##  Target Impact
 
 | Metric | Current State | With BLACKBOX MD |
 |---|---|---|
@@ -129,7 +129,7 @@ The doctor sees the reasoning. The doctor decides. BLACKBOX MD just makes sure n
 
 ---
 
-##  Project Structure
+## Project Structure
 
 ```
 blackbox-md/
@@ -231,7 +231,7 @@ python model/train.py --data ./data/processed/ --output ./model/saved_models/
 
 ---
 
-## Current Status
+##  Current Status
 
 | Component | Status |
 |---|---|
@@ -254,7 +254,7 @@ python model/train.py --data ./data/processed/ --output ./model/saved_models/
 
 ---
 
-## 📚 References & Datasets
+##  References & Datasets
 
 - **MIMIC-IV** — Johnson et al., PhysioNet (2023). [physionet.org/content/mimiciv](https://physionet.org/content/mimiciv/)
 - **HL7 FHIR R4** — [hl7.org/fhir/R4](https://hl7.org/fhir/R4/)
@@ -275,10 +275,6 @@ This project is in early development. Contributions welcome in:
 Open an issue to discuss before submitting a PR.
 
 ---
-
-##  License
-
-MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 
