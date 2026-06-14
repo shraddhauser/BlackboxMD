@@ -1,5 +1,6 @@
 #  BLACKBOX MD
 ### Explainable AI Second Opinion System for Misdiagnosis Prevention
+(currently planning to create system for specific 2-3 disease)
 
 > *"The doctor isn't wrong. The AI just wants to show its work."*
 
@@ -235,9 +236,9 @@ python model/train.py --data ./data/processed/ --output ./model/saved_models/
 
 | Component | Status |
 |---|---|
-| FHIR R4 data ingestion | ✅ Complete |
-| XGBoost classifier (MIMIC-IV) | ✅ Complete |
-| SHAP explainability layer | ✅ Complete |
+| FHIR R4 data ingestion |🔄 In progress |
+| XGBoost classifier (MIMIC-IV) |🔄 In progress |
+| SHAP explainability layer | 🔄 In progress |
 | Plain-language generator | 🔄 In progress |
 | EHR alert push (FHIR write) | 🔄 In progress |
 | React dashboard embed | 📋 Planned |
@@ -273,8 +274,6 @@ This project is in early development. Contributions welcome in:
 - Frontend (EHR embed panel)
 
 Open an issue to discuss before submitting a PR.
-
----
 
 ---
 
