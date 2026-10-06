@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLACKBOX MD — Comparative Explainable AI for Pulmonary Oncology</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- Top Navigation Header -->
+        <header class="navbar">
+            <div class="brand">
+                <div class="brand-logo">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1>BLACKBOX <span class="accent-text">MD</span></h1>
+                    <p class="tagline">Comparative XAI Diagnostic System • DenseNet-121</p>
+                </div>
+            </div>
+
+            <div class="header-status">
+                <div class="status-badge" id="server-status-badge">
+                    <span class="pulse-dot green"></span>
+                    <span id="status-text">Connecting to Backend...</span>
+                </div>
+                <div class="device-badge" id="device-badge">
+                    <span>Device:</span> <strong id="device-name">CPU</strong>
+                </div>
+                <a href="https://github.com" target="_blank" id="github-link" class="github-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                    </svg>
+                    GitHub Repository
+                </a>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs-nav">
+            <button class="tab-btn active" data-tab="diagnostic">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                </svg>
+                Live Diagnostics & XAI
+            </button>
+            <button class="tab-btn" data-tab="analytics">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="20" x2="18" y2="10"/>
+                    <line x1="12" y1="20" x2="12" y2="4"/>
+                    <line x1="6" y1="20" x2="6" y2="14"/>
+                </svg>
+                Model Analytics & Metrics
+            </button>
+            <button class="tab-btn" data-tab="explorer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"/>
+                    <rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/>
+                    <rect x="3" y="14" width="7" height="7"/>
+                </svg>
+                Dataset Sample Browser
+            </button>
+        </nav>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- TAB 1: Live Diagnostics -->
+            <section id="tab-diagnostic" class="tab-pane active">
+                <div class="grid-2col">
+                    <!-- Left Column: Image Input & Control Panel -->
+                    <div class="panel glass-card">
+                        <div class="panel-header">
+                            <h3>1. Select or Upload CT Scan</h3>
+                        </div>
+                        
+                        <!-- Upload Dropzone -->
+                        <div class="dropzone" id="dropzone">
+                            <input type="file" id="file-input" accept="image/*" class="file-hidden">
+                            <div class="dropzone-content">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="17 8 12 3 7 8"/>
+                                    <line x1="12" y1="3" x2="12" y2="15"/>
+                                </svg>
+                                <p>Drag & drop chest CT scan image here</p>
+                                <span class="subtext">or click to browse from your computer</span>
+                            </div>
+                        </div>
+
+                        <!-- Sample Selector -->
+                        <div class="sample-selector-section">
+                            <label class="section-label">Or select a test sample from dataset:</label>
+                            <div class="sample-chips" id="sample-chips">
+                                <button class="chip sample-btn" data-class="adenocarcinoma" data-file="000114.png">Adenocarcinoma Sample</button>
+                                <button class="chip sample-btn" data-class="large.cell.carcinoma" data-file="000108.png">Large Cell Sample</button>
+                                <button class="chip sample-btn" data-class="normal" data-file="10.png">Normal Sample</button>
+                                <button class="chip sample-btn" data-class="squamous.cell.carcinoma" data-file="000119.png">Squamous Cell Sample</button>
+                            </div>
+                        </div>
+
+                        <!-- XAI Method Selection -->
+                        <div class="panel-header mt-4">
+                            <h3>2. XAI Explainability Options</h3>
+                        </div>
+                        <div class="xai-options-grid">
+                            <label class="xai-checkbox-card">
+                                <input type="checkbox" id="chk-gradcam" checked>
+                                <span class="checkmark"></span>
+                                <div class="opt-info">
+                                    <strong>Grad-CAM</strong>
+                                    <span>DenseNet-121 Layer Activation</span>
+                                </div>
+                            </label>
+                            <label class="xai-checkbox-card">
+                                <input type="checkbox" id="chk-ig" checked>
+                                <span class="checkmark"></span>
+                                <div class="opt-info">
+                                    <strong>Integrated Gradients</strong>
+                                    <span>Axiomatic Pixel Attributions</span>
+                                </div>
+                            </label>
+                            <label class="xai-checkbox-card">
+                                <input type="checkbox" id="chk-shap" checked>
+                                <span class="checkmark"></span>
+                                <div class="opt-info">
+                                    <strong>SHAP</strong>
+                                    <span>Shapley Value Explainer</span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Action Button -->
+                        <button id="btn-analyze" class="primary-btn mt-4">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                            Run Diagnosis & Generate XAI Maps
+                        </button>
+                    </div>
+
+                    <!-- Right Column: Diagnostic Prediction Results -->
+                    <div class="panel glass-card">
+                        <div class="panel-header">
+                            <h3>Model Prediction Results</h3>
+                            <span id="prediction-source" class="source-tag">No input loaded</span>
+                        </div>
+
+                        <div id="prediction-placeholder" class="placeholder-state">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                            <p>Select or upload a chest CT scan to view DenseNet-121 predictions & XAI heatmaps</p>
+                        </div>
+
+                        <div id="prediction-results" class="results-container hidden">
+                            <!-- Top Prediction Callout -->
+                            <div class="diagnosis-callout" id="diagnosis-callout">
+                                <div class="callout-label">Predicted Diagnosis</div>
+                                <div class="callout-value" id="top-diagnosis-name">Adenocarcinoma</div>
+                                <div class="confidence-pill" id="top-confidence-pill">98.4% Confidence</div>
+                            </div>
+
+                            <!-- Probability Bars -->
+                            <div class="probability-section">
+                                <h4>Classification Probability Distribution</h4>
+                                <div class="prob-list" id="prob-list">
+                                    <!-- Populated by JS -->
+                                </div>
+                            </div>
+
+                            <!-- Key Quantitative Insights (Flowchart Step 5) -->
+                            <div class="insights-section mt-3">
+                                <h4>Heatmap Analysis & Key Insights</h4>
+                                <div class="insights-grid">
+                                    <div class="insight-card">
+                                        <span class="insight-label">Anatomical Location</span>
+                                        <strong class="insight-value" id="insight-location">—</strong>
+                                    </div>
+                                    <div class="insight-card">
+                                        <span class="insight-label">Activation Level</span>
+                                        <strong class="insight-value" id="insight-activation">—</strong>
+                                    </div>
+                                    <div class="insight-card">
+                                        <span class="insight-label">Region Size</span>
+                                        <strong class="insight-value" id="insight-size">—</strong>
+                                    </div>
+                                    <div class="insight-card">
+                                        <span class="insight-label">Activation Intensity</span>
+                                        <strong class="insight-value" id="insight-intensity">—</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- NLP Clinical Explanation (Flowchart Step 6) -->
+                            <div class="nlp-explanation-card mt-3">
+                                <h4>Natural Language Explanation (NLP Module)</h4>
+                                <p class="nlp-primary-text" id="nlp-primary-text">Select or upload a CT scan to view natural language clinical findings.</p>
+                                <div class="nlp-impression-box mt-2" id="nlp-impression-box">
+                                    <span class="impression-tag">Clinical Impression</span>
+                                    <p id="nlp-impression-text">—</p>
+                                </div>
+                            </div>
+
+                            <!-- PDF Report Export Action (Flowchart Step 7) -->
+                            <div class="report-export-section mt-4">
+                                <button id="btn-download-pdf" class="pdf-download-btn">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                        <line x1="12" y1="18" x2="12" y2="12"></line>
+                                        <line x1="9" y1="15" x2="15" y2="15"></line>
+                                    </svg>
+                                    Download / Generate Report (PDF)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparative XAI Heatmaps Section -->
+                <div class="panel glass-card mt-4" id="xai-results-panel">
+                    <div class="panel-header flex-between">
+                        <div>
+                            <h3>Comparative Explainable AI (XAI) Heatmaps</h3>
+                            <p class="subtitle">Side-by-side analysis of DenseNet-121 diagnostic decision heatmaps</p>
+                        </div>
+                        <div class="opacity-control">
+                            <label for="slider-opacity">Heatmap Overlay Opacity:</label>
+                            <input type="range" id="slider-opacity" min="0.1" max="1.0" step="0.05" value="0.45">
+                            <span id="opacity-val">45%</span>
+                        </div>
+                    </div>
+
+                    <div class="xai-grid" id="xai-grid">
+                        <div class="xai-card">
+                            <div class="card-title">Original CT Scan</div>
+                            <div class="img-wrapper">
+                                <img id="img-orig" src="/static/placeholder.png" alt="Original CT Scan">
+                            </div>
+                            <div class="card-meta">Raw input scan (256x256)</div>
+                        </div>
+
+                        <div class="xai-card" id="card-gradcam">
+                            <div class="card-title">Grad-CAM</div>
+                            <div class="img-wrapper">
+                                <img id="img-gradcam" class="xai-img" src="/static/placeholder.png" alt="Grad-CAM Result">
+                            </div>
+                            <div class="card-meta" id="meta-gradcam">denseblock4 feature map activation</div>
+                        </div>
+
+                        <div class="xai-card" id="card-ig">
+                            <div class="card-title">Integrated Gradients</div>
+                            <div class="img-wrapper">
+                                <img id="img-ig" class="xai-img" src="/static/placeholder.png" alt="Integrated Gradients Result">
+                            </div>
+                            <div class="card-meta" id="meta-ig">Axiomatic path gradient attribution</div>
+                        </div>
+
+                        <div class="xai-card" id="card-shap">
+                            <div class="card-title">SHAP</div>
+                            <div class="img-wrapper">
+                                <img id="img-shap" class="xai-img" src="/static/placeholder.png" alt="SHAP Result">
+                            </div>
+                            <div class="card-meta" id="meta-shap">Shapley value pixel importance</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: Model Analytics -->
+            <section id="tab-analytics" class="tab-pane">
+                <div class="grid-2col">
+                    <!-- Metrics Summary Card -->
+                    <div class="panel glass-card">
+                        <div class="panel-header">
+                            <h3>Model Performance Overview</h3>
+                        </div>
+                        <div class="metrics-stat-grid">
+                            <div class="stat-card">
+                                <span class="stat-label">Model Architecture</span>
+                                <span class="stat-val accent">DenseNet-121</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Target Classes</span>
+                                <span class="stat-val">4 Categories</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Best Test Accuracy</span>
+                                <span class="stat-val green" id="stat-test-acc">94.8%</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Early Stopping Patience</span>
+                                <span class="stat-val">6 Epochs</span>
+                            </div>
+                        </div>
+
+                        <div class="chart-box mt-4">
+                            <h4>Per-Class Precision, Recall & F1-Score</h4>
+                            <canvas id="chart-class-metrics"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Training Curves -->
+                    <div class="panel glass-card">
+                        <div class="panel-header">
+                            <h3>Training & Validation Curves</h3>
+                        </div>
+                        <div class="chart-box">
+                            <h4>Accuracy per Epoch</h4>
+                            <canvas id="chart-accuracy"></canvas>
+                        </div>
+                        <div class="chart-box mt-4">
+                            <h4>Loss per Epoch</h4>
+                            <canvas id="chart-loss"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: Dataset Explorer -->
+            <section id="tab-explorer" class="tab-pane">
+                <div class="panel glass-card">
+                    <div class="panel-header">
+                        <h3>Chest CT Dataset Test Gallery</h3>
+                        <p class="subtitle">Browse sample scans from the 4 pulmonary carcinoma categories</p>
+                    </div>
+
+                    <div class="gallery-filters" id="gallery-filters">
+                        <button class="filter-btn active" data-class="all">All Classes</button>
+                        <button class="filter-btn" data-class="adenocarcinoma">Adenocarcinoma</button>
+                        <button class="filter-btn" data-class="large.cell.carcinoma">Large Cell Carcinoma</button>
+                        <button class="filter-btn" data-class="normal">Normal</button>
+                        <button class="filter-btn" data-class="squamous.cell.carcinoma">Squamous Cell Carcinoma</button>
+                    </div>
+
+                    <div class="gallery-grid" id="gallery-grid">
+                        <!-- Populated dynamically by JS -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>BLACKBOX MD — Comparative Explainable AI for Pulmonary Oncology • DenseNet-121 • PyTorch, FastAPI & XAI</p>
+        </footer>
+    </div>
+
+    <!-- Loading Modal -->
+    <div id="loading-modal" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="spinner"></div>
+            <h3>Computing Diagnosis & XAI Heatmaps</h3>
+            <p id="loading-text">Running DenseNet-121 forward pass and generating Grad-CAM, Integrated Gradients, & SHAP explainability maps...</p>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

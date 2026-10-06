@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+results/*.png
+results/*.npy
+.vscode/
+.idea/
+*.log
+node_modules/
+frontend/node_modules/
+
